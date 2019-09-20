@@ -1,3 +1,5 @@
+#data from https://www.kaggle.com/nih-chest-xrays/data
+import numpy as np
 import torch
 import torchvision
 import torch.nn as nn
@@ -5,6 +7,7 @@ from torchvision import transforms
 from PIL import Image
 import os
 from torch.utils.data import Dataset
+import torch.optim as optim
 
 class DenseNet121(nn.Module):
     def __init__(self):
@@ -16,7 +19,7 @@ class DenseNet121(nn.Module):
         )
 
     def forward(self, x):
-        x = self.densenet121(x)
+        x = self.model(x)
         return x
 
 
@@ -98,13 +101,69 @@ class DataPreprocessing(Dataset):
         return len(self.image_names)
 
 
+class Train():
+
+    def __init__(self, trainset, model):
+
+        trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True, num_workers=2)
+        criterion = nn.CrossEntropyLoss()
+        optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+
+        for epoch in range(1):  # loop over the dataset multiple times
+
+            running_loss = 0.0
+            for i, (images, labels) in enumerate(trainloader, 0): # get the inputs; data is a list of [images, labels]
+
+                #images.shape -> [64, 10, 3, 224, 224]
+                #labels.shape -> [64, 15]
+
+                # zero the parameter gradients
+                optimizer.zero_grad()
+
+                #format input
+                n_batches, n_crops, channels, height, width = images.size()
+                image_batch = torch.autograd.Variable(images.view(-1, channels, height, width)) #640 images: 64 batches contain 10 crops each decomposed into 640 images
+
+                labels = self.tile(labels, 0, 10) #duplicate for each crop the label [1,2],[3,4] => [1,2],[1,2],[3,4],[3,4] -> 640 labels
+
+                # forward + backward + optimize
+                outputs = model(image_batch)
+                loss = criterion(outputs, labels)
+                loss.backward()
+                optimizer.step()
+
+                # print statistics
+                running_loss += loss.item()
+                print(running_loss)
+                break
+                if i % 2000 == 1999:  # print every 2000 mini-batches
+                    print('[%d, %5d] loss: %.3f' %
+                          (epoch + 1, i + 1, running_loss / 2000))
+                    running_loss = 0.0
+
+                break
+        print('Finished Training')
+
+    def tile(self,a, dim, n_tile):
+        init_dim = a.size(dim)
+        repeat_idx = [1] * a.dim()
+        repeat_idx[dim] = n_tile
+        a = a.repeat(*(repeat_idx))
+        order_index = torch.LongTensor(np.concatenate([init_dim * np.arange(n_tile) + i for i in range(init_dim)]))
+        return torch.index_select(a, dim, order_index)
+
+
 def main():
-    data = DataPreprocessing()
-    print(data.image_names)
-    image, lbl = data.__getitem__(1)
-    print(image.shape)
-    trans = transforms.ToPILImage()
-    trans(image[9]).show()
+    trainset = DataPreprocessing()
+    #print(data.image_names)
+    #image, lbl = data.__getitem__(1)
+    #print(image.shape)
+    #trans = transforms.ToPILImage()
+    #trans(image[9]).show()
+    model = DenseNet121()
+    train = Train(trainset, model)
+
+
 
 if __name__ == '__main__':
     main()
