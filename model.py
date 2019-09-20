@@ -18,7 +18,7 @@ class DenseNet121(nn.Module):
         super(DenseNet121, self).__init__()
         self.model = torchvision.models.densenet121(pretrained=True)
         self.model.classifier = nn.Sequential(
-            nn.Linear(1000, 15),
+            nn.Linear(1024, 15),
             nn.Sigmoid()
         )
 
