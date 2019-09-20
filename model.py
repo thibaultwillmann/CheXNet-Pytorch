@@ -21,24 +21,12 @@ class DenseNet121(nn.Module):
     def forward(self, x):
         x = self.model(x)
         return x
+    
+    def save_param(self):
+        torch.save(self.model.state_dict(), "tensor.pt")
 
-
-
-
-# input_image_grey = Image.open("test.jpeg")
-# input_image = input_image_grey.convert('RGB')
-# preprocess = transforms.Compose([transforms.Resize(256),
-#                                 transforms.CenterCrop(224),
-#                                 transforms.ToTensor(),
-#                                 transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-#                                 ])
-# input_tensor = preprocess(input_image)
-# input_batch = input_tensor.unsqueeze(0)
-# print(input_batch.shape)
-# output = model(input_batch)
-# print(output[0])
-
-# put into a class getting data ready
+    def load_param(self):
+        self.model.load_state_dict(torch.load("tensor.pt"))
 
 class DataPreprocessing(Dataset):
 
