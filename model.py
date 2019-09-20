@@ -1,5 +1,3 @@
-#data from https://www.kaggle.com/nih-chest-xrays/data
-
 import os
 import math
 import numpy as np
@@ -116,7 +114,7 @@ class Train():
                 n_batches, n_crops, channels, height, width = images.size()
                 image_batch = torch.autograd.Variable(images.view(-1, channels, height, width)) #640 images: 64 batches contain 10 crops each decomposed into 640 images
 
-                labels = self.tile(labels, 0, 10) #duplicate for each crop the label [1,2],[3,4] => [1,2],[1,2],[3,4],[3,4] -> 640 labels
+                labels = tile(labels, 0, 10) #duplicate for each crop the label [1,2],[3,4] => [1,2],[1,2],[3,4],[3,4] -> 640 labels
 
                 # forward + backward + optimize
                 outputs = model(image_batch)
@@ -133,14 +131,38 @@ class Train():
                     running_loss = 0.0
 
         print('Finished Training')
+        
+class Test():
 
-    def tile(self,a, dim, n_tile):
-        init_dim = a.size(dim)
-        repeat_idx = [1] * a.dim()
-        repeat_idx[dim] = n_tile
-        a = a.repeat(*(repeat_idx))
-        order_index = torch.LongTensor(np.concatenate([init_dim * np.arange(n_tile) + i for i in range(init_dim)]))
-        return torch.index_select(a, dim, order_index)
+    def __init__(self, testset, model):
+
+        testloader = torch.utils.data.DataLoader(testset, batch_size=1, shuffle=True, num_workers=2)
+        correct = 0
+        total = 0
+
+        with torch.no_grad():
+            for (images, labels) in testloader:
+
+                # format input
+                n_batches, n_crops, channels, height, width = images.size()
+                image_batch = torch.autograd.Variable(images.view(-1, channels, height, width))
+                labels = tile(labels, 0, 10)
+
+                outputs = model(image_batch)
+                _, predicted = torch.max(outputs.data, 1) #predicted is class index
+                _, truth = torch.max(labels.data, 1)
+                total += labels.size(0)
+                correct += (predicted == truth).sum().item()
+
+        print('Accuracy of the network on the test images: %d %%' % (100 * correct / total))
+
+def tile(a, dim, n_tile):
+    init_dim = a.size(dim)
+    repeat_idx = [1] * a.dim()
+    repeat_idx[dim] = n_tile
+    a = a.repeat(*(repeat_idx))
+    order_index = torch.LongTensor(np.concatenate([init_dim * np.arange(n_tile) + i for i in range(init_dim)]))
+    return torch.index_select(a, dim, order_index)
 
 def get_label_for_image(model, image_path):
     classes = ['Atelectasis', 'Consolidation', 'Infiltration', 'Pneumothorax', 'Edema', 'Emphysema', 'Fibrosis',
