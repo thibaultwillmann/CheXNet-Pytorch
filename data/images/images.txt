@@ -1,0 +1,1 @@
+all other images available in https://www.kaggle.com/nih-chest-xrays/sample#sample.zip
