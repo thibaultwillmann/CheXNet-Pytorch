@@ -1,9 +1,11 @@
 #data from https://www.kaggle.com/nih-chest-xrays/data
 
 import os
+import math
 import numpy as np
 import torch
 from torch.utils.data import Dataset
+from torch.utils.data import random_split
 import torch.nn as nn
 import torch.optim as optim
 import torchvision
@@ -141,9 +143,10 @@ class Train():
         return torch.index_select(a, dim, order_index)
 
 def main():
-    trainset = DataPreprocessing()
+    data = DataPreprocessing()
+    train_set, test_set = random_split(data, [math.ceil(len(data) * 0.8), math.floor(len(data) * 0.2)])
     model = DenseNet121()
-    train = Train(trainset, model)
+    train = Train(train_set, model)
 
 if __name__ == '__main__':
     main()
