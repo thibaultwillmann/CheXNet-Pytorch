@@ -1,15 +1,17 @@
 #data from https://www.kaggle.com/nih-chest-xrays/data
+
+import os
 import numpy as np
 import torch
-import torchvision
+from torch.utils.data import Dataset
 import torch.nn as nn
+import torch.optim as optim
+import torchvision
 from torchvision import transforms
 from PIL import Image
-import os
-from torch.utils.data import Dataset
-import torch.optim as optim
 
 class DenseNet121(nn.Module):
+    
     def __init__(self):
         super(DenseNet121, self).__init__()
         self.model = torchvision.models.densenet121(pretrained=True)
@@ -122,14 +124,12 @@ class Train():
 
                 # print statistics
                 running_loss += loss.item()
-                print(running_loss)
-                break
+                
                 if i % 2000 == 1999:  # print every 2000 mini-batches
                     print('[%d, %5d] loss: %.3f' %
                           (epoch + 1, i + 1, running_loss / 2000))
                     running_loss = 0.0
 
-                break
         print('Finished Training')
 
     def tile(self,a, dim, n_tile):
@@ -140,18 +140,10 @@ class Train():
         order_index = torch.LongTensor(np.concatenate([init_dim * np.arange(n_tile) + i for i in range(init_dim)]))
         return torch.index_select(a, dim, order_index)
 
-
 def main():
     trainset = DataPreprocessing()
-    #print(data.image_names)
-    #image, lbl = data.__getitem__(1)
-    #print(image.shape)
-    #trans = transforms.ToPILImage()
-    #trans(image[9]).show()
     model = DenseNet121()
     train = Train(trainset, model)
-
-
 
 if __name__ == '__main__':
     main()
