@@ -142,6 +142,23 @@ class Train():
         order_index = torch.LongTensor(np.concatenate([init_dim * np.arange(n_tile) + i for i in range(init_dim)]))
         return torch.index_select(a, dim, order_index)
 
+def get_label_for_image(model, image_path):
+    classes = ['Atelectasis', 'Consolidation', 'Infiltration', 'Pneumothorax', 'Edema', 'Emphysema', 'Fibrosis',
+        'Effusion', 'Pneumonia', 'Pleural_Thickening', 'Cardiomegaly', 'Nodule', 'Hernia', 'Mass', 'No Finding']
+    input_image_grey = Image.open(image_path)
+    input_image = input_image_grey.convert('RGB')
+    preprocess = transforms.Compose([transforms.Resize(256),
+                                     transforms.CenterCrop(224),
+                                     transforms.ToTensor(),
+                                     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+                                     ])
+    input_tensor = preprocess(input_image)
+    input_batch = input_tensor.unsqueeze(0)
+    output = model(input_batch)
+    index_tensor = torch.argmax(output)
+    index = index_tensor.item()
+    return classes[index]    
+
 def main():
     data = DataPreprocessing()
     train_set, test_set = random_split(data, [math.ceil(len(data) * 0.8), math.floor(len(data) * 0.2)])
