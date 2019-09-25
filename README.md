@@ -41,6 +41,14 @@ how you want to solve it, what alternative you plan to try and why
 
 ## 2.2. Design
 
+We are using Pytorch, which is an open source machine learning library used mainly for Deep Learning tasks such as Computer Vision and Natural Language Processing. Pytorch was developed by Facebooks Artificial Intelligence Research Group under Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan. 
+
+Our model consists of the pytorch implementation of the DenseNet convolutional neural network with 121 layers available under the torchvision library and an additional fully connected linear layer. 
+
+The network expects an image of dimension [channel, height, width], we are using [3,244,244].
+
+The model has an output layer of 15 neurons, each indicating the probability of Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pneumonia, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass, No Finding (no disease present) accordingly. The output is passed as a FloatTensor.
+
 information about the platform, code, how long to train, technical challenges
 
 # References
