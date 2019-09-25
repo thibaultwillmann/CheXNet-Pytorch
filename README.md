@@ -14,5 +14,15 @@ Further an estimated two thirds of the global population lacks access to radiolo
 
 ### 1.1 Related Works
 
+The Stanford ML Group researched and came up with a Deep Learning Network to detect Pneumonia from chest X-Rays images.
+The group detailed their findings in the paper [CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays](https://arxiv.org/pdf/1711.05225.pdf) and features an [offical website](https://stanfordmlgroup.github.io/projects/chexnet/). 
+
+The group decided to use the 121 layer *DenseNet* convolutional neural network, taking advantage of each layer obtaining additional inputs from all preceding layers and passing on its own feature-maps to all subsequent layers. Basically each layer is receiving a “collective knowledge” from all preceding layers.
+
+The dataset the group used to train their network, was released by the US National Institute of Health and contains 112,120 frontal-view X-ray images of 30,805 unique patients, annotated with up to 14 different thoracic pathology labels using NLP methods on radiology reports. They labeled images that have pneumonia as one of the annotated pathologies as positive examples and label all other images as negative examples for the pneumonia detection task.
+
+
 # CheXNet-Pytorch
 data taken from data from https://www.kaggle.com/nih-chest-xrays/data
+https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803
+https://stanfordmlgroup.github.io/projects/chexnet/
