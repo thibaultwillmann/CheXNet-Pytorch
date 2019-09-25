@@ -37,7 +37,9 @@ The network receives a chest X-Rays image and output the probability of Pneumoni
 
 ## 2.1. General Approach
 
-Our task is to build an algorithm that for a given chest X-Ray image returns probabilities for different diseases and no disease being present. We solve this task by using a 121 layer *DenseNet* convoluted neural network. We use a DenseNet, because they improve flow of information and gradients through the network. Thus they make the optimization of very deep networks easy to control. The weights of the network are initialized with weights from a model pretrained on [ImageNet](http://image-net.org). We add a final fully connected layer with 15 neuron outputs. Finally we apply a sigmoid nonlinearity function on each neuron.
+Our task is to build an algorithm that for a given chest X-Ray image returns probabilities for different diseases (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) and no disease being present. We solve this task by using a 121 layer *DenseNet* convoluted neural network. We use a DenseNet, because they improve flow of information and gradients through the network. Thus they make the optimization of very deep networks easy to control. The weights of the network are initialized with weights from a model pretrained on [ImageNet](http://image-net.org). We add a final fully connected layer with 15 neuron outputs. Finally we apply a sigmoid nonlinearity function on each neuron. Each output will indicate the probability of a certain disease (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) being present with the last output returning the probability of no disease being present.
+
+We train the network on the https://www.kaggle.com/nih-chest-xrays/data
 
 ## 2.2. Design
 
