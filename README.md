@@ -75,6 +75,8 @@ We randomly sampled 5% of these images and created a smaller dataset. The random
 - Nodule Mass
 - Hernia
 
+write about our file structure and how we read the data
+
 ### 2.2.3. Training
 
 optimizer
