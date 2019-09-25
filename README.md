@@ -37,21 +37,31 @@ The network receives a chest X-Rays image and output the probability of Pneumoni
 
 ## 2.1. General Approach
 
-Our task is to build an algorithm that for a given chest X-Ray image returns probabilities for different diseases (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) and no disease being present. We solve this task by using a 121 layer *DenseNet* convoluted neural network. We use a DenseNet, because they improve flow of information and gradients through the network. Thus they make the optimization of very deep networks easy to control. The weights of the network are initialized with weights from a model pretrained on [ImageNet](http://image-net.org). We add a final fully connected layer with 15 neuron outputs. Finally we apply a sigmoid nonlinearity function on each neuron. Each output will indicate the probability of a certain disease (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) being present with the last output returning the probability of no disease being present.
-
-We train the network on the https://www.kaggle.com/nih-chest-xrays/data
+Our task is to build an algorithm that for a given chest X-Ray image returns probabilities for different diseases (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) being present and the probability of no disease being present. We use a convolutional neural network to solve this task. CNNs are Deep Learning algorithms which can take in an input image, assign importance (learnable weights and biases) to various aspects/objects in the image and be able to differentiate one from the other.
+Therefore idealy CNNs will recognize small features in the first layers and larger features in the later layers. Using the learned features the CNN will be able to distinguish between the different diseases.
 
 ## 2.2. Design
 
-We are using Pytorch, which is an open source machine learning library used mainly for Deep Learning tasks such as Computer Vision and Natural Language Processing. Pytorch was developed by Facebooks Artificial Intelligence Research Group under Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan. 
+show code examples!!!!!!
 
-Our model consists of the pytorch implementation of the DenseNet convolutional neural network with 121 layers available under the torchvision library and an additional fully connected linear layer. 
+### 2.2.1. Model
 
-The network expects an image of dimension [channel, height, width], we are using [3,244,244].
+As a model we use a 121 layer *DenseNet* convoluted neural network. We use a DenseNet, because they improve flow of information and gradients through the network. Thus they make the optimization of very deep networks easy to control. The weights of the network are initialized with weights from a model pretrained on [ImageNet](http://image-net.org). We add a final fully connected layer with 15 neuron outputs. Finally we apply a sigmoid nonlinearity function on each neuron. Each output will indicate the probability of a certain disease (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) being present with the last output returning the probability of no disease being present.
 
-The model has an output layer of 15 neurons, each indicating the probability of Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pneumonia, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass, No Finding (no disease present) accordingly. The output is passed as a FloatTensor.
+We are using Pytorch, which is an open source machine learning library used mainly for Deep Learning tasks such as Computer Vision and Natural Language Processing. Pytorch was developed by Facebooks Artificial Intelligence Research Group under Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan. Our model consists of the pytorch implementation of the DenseNet convolutional neural network with 121 layers available under the torchvision library and an additional fully connected linear layer. 
 
-information about the platform, code, how long to train, technical challenges
+The network expects an image of dimension [channel, height, width], we are using [3,244,244]. The output is passed as a FloatTensor with 15 entries.
+
+### 2.2.2. Data
+
+We train the network on the https://www.kaggle.com/nih-chest-xrays/data
+
+
+### 2.2.3. Training
+
+optimizer
+loss function
+how long
 
 # References
 DenseNet [https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803](https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803)
