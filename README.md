@@ -38,7 +38,17 @@ Therefore CNNs will idealy recognize small features in the first layers and larg
 
 We are using Pytorch, which is an open source machine learning library used mainly for Deep Learning tasks such as Computer Vision and Natural Language Processing. Pytorch was developed by Facebooks Artificial Intelligence Research Group under Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan.
 
-As a model we use a 121 layer *DenseNet* convoluted neural network. We use a DenseNet, because they improve flow of information and gradients through the network. Thus they make the optimization of very deep networks easy to control. For intuition sake, we take advantage of each layer obtaining additional inputs from all preceding layers and passing on its own feature-maps to all subsequent layers. Therefore each layer is receiving a “collective knowledge” from all preceding layers. The weights of the network are initialized with weights from a model pretrained on [ImageNet](http://image-net.org). We use the pytorch implementation of the *DenseNet* CNN available under the torchvision library. We add a final fully connected layer with 15 neuron outputs. Finally we apply a sigmoid nonlinearity function on each neuron. 
+As a model we use a 121 layer *DenseNet* convoluted neural network. 
+
+[DenseNet 121](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/densenet.png)
+
+DenseNet 121
+
+[DenseNet Block](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/densenet_block.png)
+
+DenseNet Block
+
+We use a DenseNet, because they improve flow of information and gradients through the network. Thus they make the optimization of very deep networks easy to control. For intuition sake, we take advantage of each layer obtaining additional inputs from all preceding layers and passing on its own feature-maps to all subsequent layers. Therefore each layer is receiving a “collective knowledge” from all preceding layers. The weights of the network are initialized with weights from a model pretrained on [ImageNet](http://image-net.org). We use the pytorch implementation of the *DenseNet* CNN available under the torchvision library. We add a final fully connected layer with 15 neuron outputs. Finally we apply a sigmoid nonlinearity function on each neuron. 
 ```
 class DenseNet121(nn.Module):
     
