@@ -54,13 +54,9 @@ The network expects an image of dimension [channel, height, width], we are using
 
 ### 2.2.2. Data
 
-As the data to train and test the network we use the public and free data set *NIH Chest X-ray Dataset* on [Kaggle](https://www.kaggle.com/nih-chest-xrays/data). The National Insitute of Health (NIH) Chest X-ray Dataset is comprised of 112,120 X-ray images with disease labels from 30,805 unique patients. To create these labels, Natural Language Processing to text-mine disease classifications from the associated radiological reports was used. The labels are expected to be >90% accurate and suitable for weakly-supervised learning. 
+As the data to train and test the network we use the public and free data set *NIH Chest X-ray Dataset* on [Kaggle](https://www.kaggle.com/nih-chest-xrays/data). The National Insitute of Health (NIH) Chest X-ray Dataset is comprised of 112,120 X-Ray images with disease labels from 30,805 unique patients. To create these labels, Natural Language Processing to text-mine disease classifications from the associated radiological reports was used. The labels are expected to be >90% accurate and suitable for weakly-supervised learning. 
 
-Problems to note about the data: 
-- The image labels are NLP extracted so there could be some erroneous labels but the NLP labeling accuracy is estimated to be >90%. 
-- Chest x-ray radiology reports are not anticipated to be publicly shared. Parties who use this public dataset are encouraged to share their “updated” image labels through manual annotation
-
-We randomly sampled 5% of these images and created a smaller dataset. The random sample contains 5606 X-ray images and class labels. The images are of size 1024 x 1024 and there are 15 classes (14 diseases, and one for "No findings"). Images can be classified as "No findings" or one or more disease classes:
+There are 15 classes (14 diseases, and one for "No findings"). Images can be classified as "No findings" or one or more disease classes:
 - Atelectasis
 - Consolidation
 - Infiltration
@@ -75,7 +71,16 @@ We randomly sampled 5% of these images and created a smaller dataset. The random
 - Nodule Mass
 - Hernia
 
-write about our file structure and how we read the data
+The images are of size 1024 x 1024.
+
+Problems to note about the data: 
+- The image labels are NLP extracted so there could be some erroneous labels but the NLP labeling accuracy is estimated to be >90%. 
+- Chest X-Ray radiology reports are not anticipated to be publicly shared. Parties who use this public dataset are encouraged to share their “updated” image labels through manual annotation
+
+We randomly sampled 5% of these images and created a smaller dataset. The random sample contains 5606 X-Ray images and class labels. The X-Ray images are stored in *data/images/* and the class labels in *data/sample_labels.csv*. Each row in *data/sample_labels.csv* has the format 
+```
+00000013_005.png,Emphysema|Infiltration|Pleural_Thickening|Pneumothorax, ...
+```
 
 ### 2.2.3. Training
 
