@@ -23,12 +23,6 @@ Image of a chest X-Ray left and heatmap highlighting areas with high probalility
 The Stanford ML Group researched and came up with a Deep Learning Network to detect Pneumonia from chest X-Rays images.
 The group detailed their findings in the paper [CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays](https://arxiv.org/pdf/1711.05225.pdf) and features an [offical website](https://stanfordmlgroup.github.io/projects/chexnet/). 
 
-The group decided to use the 121 layer *DenseNet* convolutional neural network, taking advantage of each layer obtaining additional inputs from all preceding layers and passing on its own feature-maps to all subsequent layers. Basically each layer is receiving a “collective knowledge” from all preceding layers.
-
-![Image of one DenseNet Block](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/denseNet_block.png)
-
-The dataset the group used to train their network, was released by the US National Institute of Health and contains 112,120 frontal-view X-ray images of 30,805 unique patients, annotated with up to 14 different thoracic pathology labels using NLP methods on radiology reports. They labeled images that have pneumonia as one of the annotated pathologies as positive examples and label all other images as negative examples for the pneumonia detection task.
-
 The network receives a chest X-Rays image and output the probability of Pneumonia being present together with a chest X-Ray heatmap highlighting areas with high probalility of Pneumonia being present.
 
 # 2. Solution
@@ -44,7 +38,7 @@ Therefore CNNs will idealy recognize small features in the first layers and larg
 
 We are using Pytorch, which is an open source machine learning library used mainly for Deep Learning tasks such as Computer Vision and Natural Language Processing. Pytorch was developed by Facebooks Artificial Intelligence Research Group under Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan.
 
-As a model we use a 121 layer *DenseNet* convoluted neural network. We use a DenseNet, because they improve flow of information and gradients through the network. Thus they make the optimization of very deep networks easy to control. The weights of the network are initialized with weights from a model pretrained on [ImageNet](http://image-net.org). We use the pytorch implementation of the *DenseNet* CNN available under the torchvision library. We add a final fully connected layer with 15 neuron outputs. Finally we apply a sigmoid nonlinearity function on each neuron. 
+As a model we use a 121 layer *DenseNet* convoluted neural network. We use a DenseNet, because they improve flow of information and gradients through the network. Thus they make the optimization of very deep networks easy to control. For intuition sake, we take advantage of each layer obtaining additional inputs from all preceding layers and passing on its own feature-maps to all subsequent layers. Therefore each layer is receiving a “collective knowledge” from all preceding layers. The weights of the network are initialized with weights from a model pretrained on [ImageNet](http://image-net.org). We use the pytorch implementation of the *DenseNet* CNN available under the torchvision library. We add a final fully connected layer with 15 neuron outputs. Finally we apply a sigmoid nonlinearity function on each neuron. 
 ```
 class DenseNet121(nn.Module):
     
