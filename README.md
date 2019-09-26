@@ -8,17 +8,14 @@ Submitted as a final project report for Deep Learning IDC, 2019
 
 Pneumonia is a disease in which the air sacs in one or both lungs get infected and inflame. The air sacs may fill with fluid or pus (purulent material), causing cough with phlegm or pus, fever, chills, and difficulty breathing. Diseases such as Pneumonia are responsible for over 1 million hospitalizations and 50,000 deaths a year in the US alone. Currently radiologists use Chest X-Rays to detect diseases such as Pneumonia. Other diseases detected in this manner include Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass. Once detected, the patient can be treated. However if the disease is not detected at an early stage, the consequences can be severe. 
 
-![Image of Chest X-ray](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/data/images/00000013_005.png)
-Example of a chest X-ray
-
-Luckily Deep Learning networks can be trained to detect diseases and assist medical personel. In fact Deep Learning networks can be trained to detect diseases such as Pneumonia with greater accuracy than any human radiologist from chest X-Rays. Therfore, through decreasing human error in detection, countless lives can be saved!
+Luckily algorithms can be trained to detect diseases and assist medical personel. In fact algorithms can be trained to detect diseases such as Pneumonia with greater accuracy than any human radiologist from chest X-Rays. Therfore, through decreasing human error in detection, countless lives can be saved!
 
 Further an estimated two thirds of the global population lacks access to radiology diagnostics. These diagnostics include as mentioned above detection of diseases. With the automation of radiology experts, healthcare delivery can be improved and access to medical imaging expertise can be increased in many parts of the world. Therefore, through automating radiology experts, many parts of the world will gain radiology diagnostics and countless lives can be saved!
 
-We set out to build an algorithm that could take as input a chest X-ray image and return probabilities for a collection of diseases detectable through chest X-rays (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) and the probability of no disease being present. In Addition we envisioned the network returning a heat map of the original chest X-ray highlighting areas with high probalility of a disease being present.
+We set out to build an algorithm that could take as input a chest X-ray image and return probabilities for a collection of diseases detectable through chest X-rays (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) and the probability of no disease being present. 
 
-![Image of Chest X-ray heatmap](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/heat_map.png)
-Example of a chest X-ray heatmap
+![Image of chest X-Ray and heatmap](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/chest_x_ray_example.png)
+Image of a chest X-Ray left and heatmap highlighting areas with high probalility of a disease being present right
 
 ### 1.1. Related Works
 
