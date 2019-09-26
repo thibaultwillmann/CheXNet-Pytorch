@@ -15,6 +15,7 @@ Further an estimated two thirds of the global population lacks access to radiolo
 We set out to build an algorithm that could take as input a chest X-ray image and return probabilities for a collection of diseases detectable through chest X-rays (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) and the probability of no disease being present. 
 
 ![Image of chest X-Ray and heatmap](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/chest_x_ray_example.png)
+
 Image of a chest X-Ray left and heatmap highlighting areas with high probalility of a disease being present right
 
 ### 1.1. Related Works
