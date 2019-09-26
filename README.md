@@ -38,7 +38,7 @@ The network receives a chest X-Rays image and output the probability of Pneumoni
 ## 2.1. General Approach
 
 Our task is to build an algorithm that for a given chest X-Ray image returns probabilities for different diseases (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) being present and the probability of no disease being present. We use a convolutional neural network to solve this task. CNNs are Deep Learning algorithms which can take in an input image, assign importance (learnable weights and biases) to various aspects/objects in the image and be able to differentiate one from the other.
-Therefore idealy CNNs will recognize small features in the first layers and larger features in the later layers. Using the learned features the CNN will be able to distinguish between the different diseases.
+Therefore CNNs will idealy recognize small features in the first layers and larger features in the later layers. Using the learned features, the CNN will be able to distinguish between the different diseases.
 
 ## 2.2. Design
 
@@ -140,6 +140,14 @@ image = preprocess(image)
 optimizer
 loss function
 how long
+
+# 3 Experimental Results
+
+# 4 Discussion
+
+# 5 Code
+
+Find the entire code [here](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/model.py).
 
 # References
 DenseNet [https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803](https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803)
