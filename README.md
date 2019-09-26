@@ -65,7 +65,7 @@ class DenseNet121(nn.Module):
 
 Each output will indicate the probability of a certain disease (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) or probability of no disease being present in the input image.
 
-The network expects an image of dimension [channel, height, width], we are using [3,244,244]. The output is passed as a FloatTensor with 15 entries.
+The network expects an image of dimension channel x height x width, we are using 3 x 244 x 244. The output is passed as a FloatTensor with 15 entries.
 
 ### 2.2.2. Data
 
