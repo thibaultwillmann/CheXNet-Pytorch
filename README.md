@@ -40,11 +40,11 @@ We are using Pytorch, which is an open source machine learning library used main
 
 As a model we use a 121 layer *DenseNet* convoluted neural network. 
 
-[DenseNet 121](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/densenet.png)
+![DenseNet 121](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/densenet.png)
 
 DenseNet 121
 
-[DenseNet Block](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/densenet_block.png)
+![DenseNet Block](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/densenet_block.png)
 
 DenseNet Block
 
