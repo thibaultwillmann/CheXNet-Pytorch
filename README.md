@@ -54,9 +54,9 @@ The network expects an image of dimension [channel, height, width], we are using
 
 ### 2.2.2. Data
 
-As the data to train and test the network we use the public and free data set *NIH Chest X-ray Dataset* on [Kaggle](https://www.kaggle.com/nih-chest-xrays/data). The National Insitute of Health (NIH) Chest X-ray Dataset is comprised of 112,120 X-Ray images with disease labels from 30,805 unique patients. To create these labels, Natural Language Processing to text-mine disease classifications from the associated radiological reports was used. The labels are expected to be >90% accurate and suitable for weakly-supervised learning. 
+As the data to train and test the network we use the public and free data set *NIH Chest X-ray Dataset* on [Kaggle](https://www.kaggle.com/nih-chest-xrays/data). The National Insitute of Health (NIH) chest X-Ray dataset is comprised of 112,120 X-Ray images with disease labels from 30,805 unique patients. To create these labels, Natural Language Processing to text-mine disease classifications from the associated radiological reports was used. The labels are expected to be >90% accurate and suitable for weakly-supervised learning. 
 
-There are 15 classes (14 diseases, and one for "No findings"). Images can be classified as "No findings" or one or more disease classes:
+There are 15 classes (14 diseases, and one for "No findings"). Images can be classified as *No findings* or one or more disease classes:
 - Atelectasis
 - Consolidation
 - Infiltration
@@ -80,6 +80,44 @@ Problems to note about the data:
 We randomly sampled 5% of these images and created a smaller dataset. The random sample contains 5606 X-Ray images and class labels. The X-Ray images are stored in *data/images/* and the class labels in *data/sample_labels.csv*. Each row in *data/sample_labels.csv* has the format 
 ```
 00000013_005.png,Emphysema|Infiltration|Pleural_Thickening|Pneumothorax, ...
+```
+
+We encode each class label as a FloatTensor of length 15 for the model. Each disease in the disease_list of a single instance is weighted with 1:
+```
+classEncoding = {
+        'Atelectasis': torch.FloatTensor([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+        'Consolidation': torch.FloatTensor([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+        'Infiltration': torch.FloatTensor([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+        'Pneumothorax': torch.FloatTensor([0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+        'Edema': torch.FloatTensor([0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+        'Emphysema': torch.FloatTensor([0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+        'Fibrosis': torch.FloatTensor([0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]),
+        'Effusion': torch.FloatTensor([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]),
+        'Pneumonia': torch.FloatTensor([0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]),
+        'Pleural_Thickening': torch.FloatTensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]),
+        'Cardiomegaly': torch.FloatTensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]),
+        'Nodule': torch.FloatTensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]),
+        'Hernia': torch.FloatTensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]),
+        'Mass': torch.FloatTensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]),
+        'No Finding': torch.FloatTensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
+}
+
+labelTensor = torch.FloatTensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+for disease in diseases_list:
+        labelTensor = labelTensor.add(classEncoding[disease])
+```
+
+We apply some preprocessing on each image. The image is resized to 256x256. Then ten crops of size 224 x 224 are generated consisting of the four corners and the center plus the horizontal flipped version of these. These are transformed to a tensor and normalized. Finally the image has a dimension of 10 x 3 x 224 x 224 containing obviously ten crops.
+```
+image = Image.open(image_path).convert('RGB')
+normalize = transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+preprocess = transforms.Compose([
+  transforms.Resize(256),
+  transforms.TenCrop(224),
+  transforms.Lambda(lambda crops: torch.stack([transforms.ToTensor()(crop) for crop in crops])),
+  transforms.Lambda(lambda crops: torch.stack([normalize(crop) for crop in crops]))
+])
+image = preprocess(image)
 ```
 
 ### 2.2.3. Training
