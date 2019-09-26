@@ -42,13 +42,28 @@ Therefore idealy CNNs will recognize small features in the first layers and larg
 
 ## 2.2. Design
 
-show code examples!!!!!!
-
 ### 2.2.1. Model
 
-As a model we use a 121 layer *DenseNet* convoluted neural network. We use a DenseNet, because they improve flow of information and gradients through the network. Thus they make the optimization of very deep networks easy to control. The weights of the network are initialized with weights from a model pretrained on [ImageNet](http://image-net.org). We add a final fully connected layer with 15 neuron outputs. Finally we apply a sigmoid nonlinearity function on each neuron. Each output will indicate the probability of a certain disease (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) being present with the last output returning the probability of no disease being present.
+We are using Pytorch, which is an open source machine learning library used mainly for Deep Learning tasks such as Computer Vision and Natural Language Processing. Pytorch was developed by Facebooks Artificial Intelligence Research Group under Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan.
 
-We are using Pytorch, which is an open source machine learning library used mainly for Deep Learning tasks such as Computer Vision and Natural Language Processing. Pytorch was developed by Facebooks Artificial Intelligence Research Group under Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan. Our model consists of the pytorch implementation of the DenseNet convolutional neural network with 121 layers available under the torchvision library and an additional fully connected linear layer. 
+As a model we use a 121 layer *DenseNet* convoluted neural network. We use a DenseNet, because they improve flow of information and gradients through the network. Thus they make the optimization of very deep networks easy to control. The weights of the network are initialized with weights from a model pretrained on [ImageNet](http://image-net.org). We use the pytorch implementation of the *DenseNet* CNN available under the torchvision library. We add a final fully connected layer with 15 neuron outputs. Finally we apply a sigmoid nonlinearity function on each neuron. 
+```
+class DenseNet121(nn.Module):
+    
+    def __init__(self):
+        super(DenseNet121, self).__init__()
+        self.model = torchvision.models.densenet121(pretrained=True)
+        self.model.classifier = nn.Sequential(
+            nn.Linear(1024, 15),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        x = self.model(x)
+        return x
+```
+
+Each output will indicate the probability of a certain disease (Atelectasis, Consolidation, Infiltration, Pneumothorax, Edema, Emphysema, Fibrosis, Effusion, Pleural Thickening, Cardiomegaly, Nodule, Hernia, Mass) or probability of no disease being present in the input image.
 
 The network expects an image of dimension [channel, height, width], we are using [3,244,244]. The output is passed as a FloatTensor with 15 entries.
 
@@ -107,7 +122,7 @@ for disease in diseases_list:
         labelTensor = labelTensor.add(classEncoding[disease])
 ```
 
-We apply some preprocessing on each image. The image is resized to 256x256. Then ten crops of size 224 x 224 are generated consisting of the four corners and the center plus the horizontal flipped version of these. These are transformed to a tensor and normalized. Finally the image has a dimension of 10 x 3 x 224 x 224 containing obviously ten crops.
+We apply some preprocessing on each greyscale image. The image is converted to RGB and resized to 256x256. Then ten crops of size 224 x 224 are generated consisting of the four corners and the center plus the horizontal flipped version of these. These are transformed to a tensor and normalized. Finally the image has a dimension of 10 x 3 x 224 x 224 containing obviously ten crops.
 ```
 image = Image.open(image_path).convert('RGB')
 normalize = transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
