@@ -139,11 +139,47 @@ image = preprocess(image)
 
 ### 2.2.3. Training
 
-optimizer
-loss function
-how long
+The weights of the network are initialized with weights from a model pretrained on ImageNet (Deng et al., 2009). The network is trained end-to-end using Adam.
+We train the model using mini- batches of size 5, use an initial learning rate of 0.001, binary cross entropy loss function and stochastic gradient descent optimizer.
+```
+criterion = nn.BCELoss()
+optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+```
+we randomly split the dataset into training set of 4485 images (80%), and test set of 1121 images. There is no patient overlap between the sets.
+```
+trainloader = torch.utils.data.DataLoader(train_set, batch_size=5, shuffle=True, num_workers=5)
+```
+In total the training process took 4 hrs and 20 min with 69% accuracy on the training set.  
+```
+Epoch: 15, loss: 131.393, Accuracy: 69.030
+
+CPU times: user 2h 21min 44s, sys: 1h 13min 31s, total: 3h 35min 16s
+Wall time: 4h 18min 28s
+```
 
 # 3 Experimental Results
+ChexNet outputs a vector t of binary labels indicating the absence or presence of each of the following 14 pathology classes: Atelec- tasis, Cardiomegaly, Consolidation, Edema, Effusion, Emphysema, Fibrosis, Hernia, Infiltration, Mass, Nod-ule, Pleural Thickening, Pneumonia, and Pneumotho- rax. We replace the final fully connected layer in CheXNet with a fully connected layer producing a 15-dimensional output, after which we apply an elementwise sigmoid nonlinearity. The final output is the predicted probability of the presence of each pathology class. 
+We find that CheXNet achieves results  of 53.8% accuracy on the test set. 
+
+```
+correct = 0
+total = 0
+with torch.no_grad():
+  for i, (images, labels) in enumerate(testloader, 0):
+    images = images.cuda()
+    n_batches, n_crops, channels, height, width = images.size()
+    image_batch = torch.autograd.Variable(images.view(-1, channels, height, width))
+    labels = tile(labels, 0, 10).cuda()
+    outputs = model(image_batch)
+    correct += compute_score_with_logits(outputs, labels).sum()
+    total += labels.size(0)
+    
+
+print('Accuracy on test set: %.3f' % (100 * correct / total))
+```
+```
+Accuracy on test set: 53.872
+```
 
 # 4 Discussion
 
