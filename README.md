@@ -193,7 +193,7 @@ Accuracy on test set: 53.872
 Pneumonia is a major cause of patients dying in hospitals today. To prevent death, a early detection and treatment of pneumonia is critical. Chest X-rays are the most common examination tool used in practice with 2 billion made a year.
 However, two thirds of the global population lacks access to radiology diagnostics. In Addition, even when the equipment is available, experts who can interpret X-rays are often missing.
 
-Therefore we developed an algorithm which detects diseases such as pneumonia from front chest X-ray images. Since we only had access to the very limited computing power of Colab, we were limited to 5% of the chest X-ray images and only few epochs. However if more computing power was at our disposal we could achive a level of accuracy exceeding practicing radiologists. In conclusion this algorithm can and should save lives in many parts of the world by assisting medical staff which lacks skilled radiologists or assist radiologists directly.
+Therefore we developed an algorithm which detects diseases such as pneumonia from front chest X-ray images. Since we only had access to the very limited computing power of Colab, we were limited to 5% of the chest X-ray images and only few epochs. However if more computing power was at our disposal we could achieve a level of accuracy exceeding practicing radiologists. In conclusion this algorithm can and should save lives in many parts of the world by assisting medical staff which lacks skilled radiologists or assist radiologists directly.
 
 # 5. Code
 
