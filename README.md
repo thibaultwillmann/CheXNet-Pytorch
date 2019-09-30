@@ -191,9 +191,9 @@ Accuracy on test set: 53.872
 # 4. Discussion
 
 Pneumonia is a major cause of patients dying in hospitals today. To prevent death, a early detection and treatment of pneumonia is critical. Chest X-rays are the most common examination tool used in practice with 2 billion made a year.
-However, two thirds of the global population lacks access to radiology diagnostics. In Addition even when the equipment is available, then experts who can interpret X-rays are often missing.
+However, two thirds of the global population lacks access to radiology diagnostics. In Addition, even when the equipment is available, experts who can interpret X-rays are often missing.
 
-Therefore we developed an algorithm which detects diseases such as pneumonia from front chest X-ray images at a level exceeding practicing radiologists (when trained long enough with substantial resources). This algorithm can save lives in many parts of the world by assisting medical staff which lacks skilled radiologists or assist radiologists directly.
+Therefore we developed an algorithm which detects diseases such as pneumonia from front chest X-ray images (when trained long enough with substantial resources) at a level exceeding practicing radiologists. This algorithm can save lives in many parts of the world by assisting medical staff which lacks skilled radiologists or assist radiologists directly.
 
 # 5. Code
 
