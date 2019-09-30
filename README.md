@@ -181,13 +181,19 @@ print('Accuracy on test set: %.3f' % (100 * correct / total))
 Accuracy on test set: 53.872
 ```
 
-# 4 Discussion
-
 # 5 Code
 
 Find the entire code [here](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/model.py).
+The colab notebook used to train the network can be found [here](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/CheXnet.ipynb).
 
 # References
-DenseNet [https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803](https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803)
 
-Stanford ML Group (CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays) [https://stanfordmlgroup.github.io/projects/chexnet/](https://stanfordmlgroup.github.io/projects/chexnet/)
+- DenseNet [https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803](https://towardsdatascience.com/review-densenet-image-classification-b6631a8ef803)
+
+- Stanford ML Group (CheXNet: Radiologist-Level Pneumonia Detection on Chest X-Rays) [https://stanfordmlgroup.github.io/projects/chexnet/](https://stanfordmlgroup.github.io/projects/chexnet/)
+
+- CheXNet Paper [https://arxiv.org/pdf/1711.05225.pdf](https://arxiv.org/pdf/1711.05225.pdf)
+
+- NIH Chest X-ray Dataset [https://www.kaggle.com/nih-chest-xrays/data](https://www.kaggle.com/nih-chest-xrays/data)
+
+- ImageNet Dataset [http://image-net.org](http://image-net.org)
