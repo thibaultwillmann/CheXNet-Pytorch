@@ -141,15 +141,20 @@ image = preprocess(image)
 
 The weights of the network are initialized with weights from a model pretrained on ImageNet (Deng et al., 2009). The network is trained end-to-end using Adam.
 We train the model using mini- batches of size 5, use an initial learning rate of 0.001, binary cross entropy loss function and stochastic gradient descent optimizer.
+
 ```
 criterion = nn.BCELoss()
 optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 ```
-we randomly split the dataset into training set of 4485 images (80%), and test set of 1121 images. There is no patient overlap between the sets.
+
+We randomly split the dataset into training set of 4485 images (80%), and test set of 1121 images. There is no patient overlap between the sets.
+
 ```
 trainloader = torch.utils.data.DataLoader(train_set, batch_size=5, shuffle=True, num_workers=5)
 ```
-In total the training process took 4 hrs and 20 min with 69% accuracy on the training set.  
+
+In total the training process took 4 hrs and 20 min with 69% accuracy on the training set.
+
 ```
 Epoch: 15, loss: 131.393, Accuracy: 69.030
 
@@ -158,8 +163,10 @@ Wall time: 4h 18min 28s
 ```
 
 # 3. Experimental Results
+
 ChexNet outputs a vector t of binary labels indicating the absence or presence of each of the following 14 pathology classes: Atelec- tasis, Cardiomegaly, Consolidation, Edema, Effusion, Emphysema, Fibrosis, Hernia, Infiltration, Mass, Nod-ule, Pleural Thickening, Pneumonia, and Pneumotho- rax. We replace the final fully connected layer in CheXNet with a fully connected layer producing a 15-dimensional output, after which we apply an elementwise sigmoid nonlinearity. The final output is the predicted probability of the presence of each pathology class. 
-We find that CheXNet achieves results  of 53.8% accuracy on the test set. 
+
+We find that CheXNet achieves results of 53.8% accuracy on the test set. 
 
 ```
 correct = 0
@@ -181,7 +188,14 @@ print('Accuracy on test set: %.3f' % (100 * correct / total))
 Accuracy on test set: 53.872
 ```
 
-# 4. Code
+# 4. Discussion
+
+Pneumonia is a major cause of patients dying in hospitals today. To prevent death, a early detection and treatment of pneumonia is critical. Chest X-rays are the most common examination tool used in practice with 2 billion made a year.
+However, two thirds of the global population lacks access to radiology diagnostics. In Addition even when the equipment is available, then experts who can interpret X-rays are often missing.
+
+Therefore we developed an algorithm which detects diseases such as pneumonia from front chest X-ray images at a level exceeding practicing radiologists (when trained long enough with substantial resources). This algorithm can save lives in many parts of the world by assisting medical staff which lacks skilled radiologists or assist radiologists directly.
+
+# 5. Code
 
 Find the entire code [here](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/model.py).
 The colab notebook used to train the network can be found [here](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/CheXnet.ipynb).
