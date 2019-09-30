@@ -1,4 +1,4 @@
-# Radiologist-Level Disese Detection on Chest X-Rays with Deep Learning 
+# Radiologist-Level Disease Detection on Chest X-Rays with Deep Learning 
 
 Ofir Tayeb & Thibault Willmann
 
