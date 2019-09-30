@@ -157,7 +157,7 @@ CPU times: user 2h 21min 44s, sys: 1h 13min 31s, total: 3h 35min 16s
 Wall time: 4h 18min 28s
 ```
 
-# 3 Experimental Results
+# 3. Experimental Results
 ChexNet outputs a vector t of binary labels indicating the absence or presence of each of the following 14 pathology classes: Atelec- tasis, Cardiomegaly, Consolidation, Edema, Effusion, Emphysema, Fibrosis, Hernia, Infiltration, Mass, Nod-ule, Pleural Thickening, Pneumonia, and Pneumotho- rax. We replace the final fully connected layer in CheXNet with a fully connected layer producing a 15-dimensional output, after which we apply an elementwise sigmoid nonlinearity. The final output is the predicted probability of the presence of each pathology class. 
 We find that CheXNet achieves results  of 53.8% accuracy on the test set. 
 
@@ -181,7 +181,7 @@ print('Accuracy on test set: %.3f' % (100 * correct / total))
 Accuracy on test set: 53.872
 ```
 
-# 5 Code
+# 4. Code
 
 Find the entire code [here](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/model.py).
 The colab notebook used to train the network can be found [here](https://github.com/thibaultwillmann/CheXNet-Pytorch/blob/master/CheXnet.ipynb).
